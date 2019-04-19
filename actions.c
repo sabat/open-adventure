@@ -879,6 +879,13 @@ static phase_codes_t inven(void)
     return GO_CLEAROBJ;
 }
 
+static phase_codes_t verbose(verb_t verb, obj_t obj)
+{
+    game.abbnum = 1;
+    rspeak(VERBOSITY);
+    return GO_CLEAROBJ;
+}
+
 static phase_codes_t light(verb_t verb, obj_t obj)
 /*  Light.  Applicable only to lamp and urn. */
 {
@@ -1391,6 +1398,8 @@ phase_codes_t action(command_t command)
                 return vcarry(command.verb, INTRANSITIVE);
             case  DROP:
                 return GO_UNKNOWN;
+            case  VERBOSE:
+                return verbose(command.verb, INTRANSITIVE);
             case  SAY:
                 return GO_UNKNOWN;
             case  UNLOCK:

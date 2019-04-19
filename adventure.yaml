@@ -2742,6 +2742,7 @@ arbitrary_messages:  !!omap
 - CROSS_BRIDGE: 'I respectfully suggest you go across the bridge instead of jumping.'
 - NO_CROSS: 'There is no way across the fissure.'
 - NO_CARRY: 'You''re not carrying anything.'
+- VERBOSITY: 'Now operating at maximum verbosity.'
 - NOW_HOLDING: 'You are currently holding the following:'
 - BIRD_PINING: |-
     It's not hungry (it's merely pinin' for the fjords).  Besides, you
@@ -3766,6 +3767,9 @@ actions: !!omap
 - SAY:
     message: NO_MESSAGE
     words: ['say', 'chant', 'sing', 'utter', 'mumbl']
+- VERBOSE:
+    message: NO_MESSAGE
+    words: ['verb', 'verbose']
 - UNLOCK:
     message: *not_lockable
     words: ['unloc', 'open']
