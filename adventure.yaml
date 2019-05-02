@@ -3107,13 +3107,13 @@ objects: !!omap
     descriptions:
     - 'There is a small wicker cage discarded nearby.'
 - ROD:
-    words: ['rod']
+    words: ['rod', 'wand']
     inventory: 'Black rod'
     locations: LOC_DEBRIS
     descriptions:
     - 'A three foot black rod with a rusty star on an end lies nearby.'
 - ROD2:
-    words: ['rod']
+    words: ['rod', 'wand']
     inventory: 'Black rod'
     locations: LOC_NOWHERE
     descriptions:
@@ -3329,7 +3329,7 @@ objects: !!omap
     descriptions:
     - 'The shadowy figure seems to be trying to attract your attention.'
 - AXE:
-    words: ['axe']
+    words: ['axe', 'ax']
     inventory: 'Dwarf''s axe'
     locations: LOC_NOWHERE
     states: [AXE_HERE, AXE_LOST]

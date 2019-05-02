@@ -601,7 +601,8 @@ void juggle(obj_t object)
 
 void save_recent(obj_t object)
 {
-  recent_obj = object;
+  if (strlen(objects[object].descriptions[0]) != 0)
+    recent_obj = object;
 }
 
 obj_t get_recent(void)
