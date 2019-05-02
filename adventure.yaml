@@ -3738,6 +3738,11 @@ objects: !!omap
     inventory: !!null
     locations: LOC_NOWHERE
     descriptions: !!null
+- IT:
+    words: ['it', 'them']
+    inventory: !!null
+    locations: LOC_NOWHERE
+    descriptions: !!null
 
 obituaries:
   - query: |-

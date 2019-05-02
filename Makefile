@@ -28,6 +28,8 @@ SOURCES=$(OBJS:.o=.c) advent.h adventure.yaml Makefile control make_dungeon.py t
 advent:	$(OBJS) dungeon.o
 	$(CC) $(CCFLAGS) $(DBX) -o advent $(OBJS) dungeon.o $(LDFLAGS) $(LIBS)
 
+all: advent
+
 main.o:	 	advent.h dungeon.h
 
 init.o:	 	advent.h dungeon.h

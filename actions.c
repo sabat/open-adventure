@@ -296,9 +296,7 @@ static phase_codes_t vcarry(verb_t verb, obj_t obj)
  *  take one without the other).  Liquids also special, since they depend on
  *  status of bottle.  Also various side effects, etc. */
 {
-    char taken_msg[80];
-
-    if (obj == INTRANSITIVE) {
+    if (obj == INTRANSITIVE || obj == IT) {
         /*  Carry, no object given yet.  OK if only one object present. */
         if (game.atloc[game.loc] == NO_OBJECT ||
             game.link[game.atloc[game.loc]] != 0 ||
@@ -1413,6 +1411,10 @@ phase_codes_t action(command_t command)
         } else if ((command.verb == DROP) && command.obj == EVERYTHING) {
             discardeverything(command.verb);
             return GO_CLEAROBJ;
+        } else if ((command.verb == CARRY ||
+                    command.verb == DROP) &&
+                    command.obj == IT) {
+            /* FALL THROUGH */;
         } else if ((command.verb == FIND ||
                     command.verb == INVENTORY) && (command.word[1].id == WORD_EMPTY || command.word[1].id == WORD_NOT_FOUND))
             /* FALL THROUGH */;
@@ -1427,7 +1429,7 @@ phase_codes_t action(command_t command)
 
     switch (command.part) {
     case intransitive:
-        if (command.word[1].raw[0] != '\0' && command.verb != SAY)
+        if (command.word[1].raw[0] != '\0' && command.verb != SAY && command.obj != IT)
             return GO_WORD2;
         if (command.verb == SAY)
             /* KEYS is not special, anything not NO_OBJECT or INTRANSITIVE
