@@ -9,13 +9,19 @@ VERS=$(shell sed -n <NEWS '/^[0-9]/s/:.*//p' | head -1)
 
 CC?=gcc
 CCFLAGS+=-std=c99 -D_DEFAULT_SOURCE -DVERSION=\"$(VERS)\" -O2 -D_FORTIFY_SOURCE=2 -fstack-protector-all
-LIBS=$(shell pkg-config --libs libedit)
-INC+=$(shell pkg-config --cflags libedit)
 
-# LLVM/Clang on macOS seems to need -ledit flag for linking
 UNAME_S := $(shell uname -s)
+
 ifeq ($(UNAME_S),Darwin)
-    LIBS += -ledit
+    # LLVM/Clang on macOS seems to need -ledit flag for linking
+
+    ifneq (,$(wildcard /usr/local/opt/libedit/lib/pkgconfig))
+        LIBS=$(shell PKG_CONFIG_PATH=/usr/local/opt/libedit/lib/pkgconfig pkg-config --libs libedit)
+        INC+=$(shell PKG_CONFIG_PATH=/usr/local/opt/libedit/lib/pkgconfig pkg-config --cflags libedit)
+    else
+        LIBS=$(shell pkg-config --libs libedit)
+        INC+=$(shell pkg-config --cflags libedit)
+    endif
 endif
 
 OBJS=main.o init.o actions.o score.o misc.o saveresume.o
