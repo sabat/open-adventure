@@ -931,7 +931,7 @@ static phase_codes_t verbose(verb_t verb, obj_t obj)
 {
     game.abbnum = 1;
     rspeak(VERBOSITY);
-    return GO_CLEAROBJ;
+    return GO_TOP;
 }
 
 static phase_codes_t light(verb_t verb, obj_t obj)
