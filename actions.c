@@ -415,6 +415,7 @@ static phase_codes_t vcarryeverything(verb_t verb)
 /*  Get everything that's not nailed down */
 {
     if (game.atloc[game.loc] == 0) {
+      sspeak(NOTHING_HERE);
     } else {
         for (int i = game.atloc[game.loc]; i != 0; i = game.link[i]) {
             obj_t obj = i;
@@ -578,6 +579,26 @@ static phase_codes_t discard(verb_t verb, obj_t obj)
 
     ospeak(obj, DROPPED);
     drop(obj, game.loc);
+    return GO_CLEAROBJ;
+}
+
+static phase_codes_t discardeverything(verb_t verb)
+/*  Get everything that's not nailed down */
+{
+    bool empty = true;
+
+    for (obj_t i = 1; i <= NOBJECTS; i++) {
+        if (!TOTING(i))
+          continue;
+
+        obj_t obj = i;
+        discard(verb, obj);
+        empty = false;
+    }
+
+    if (empty)
+        rspeak(NO_CARRY);
+
     return GO_CLEAROBJ;
 }
 
@@ -1388,6 +1409,9 @@ phase_codes_t action(command_t command)
             /* FALL THROUGH */;
         } else if ((command.verb == CARRY) && command.obj == EVERYTHING) {
             vcarryeverything(command.verb);
+            return GO_CLEAROBJ;
+        } else if ((command.verb == DROP) && command.obj == EVERYTHING) {
+            discardeverything(command.verb);
             return GO_CLEAROBJ;
         } else if ((command.verb == FIND ||
                     command.verb == INVENTORY) && (command.word[1].id == WORD_EMPTY || command.word[1].id == WORD_NOT_FOUND))

@@ -2975,6 +2975,7 @@ arbitrary_messages:  !!omap
 - DONT_KNOW: 'Sorry, I don''t know the word "%s".'
 - WHAT_DO: 'What do you want to do with the %s?'
 - NO_SEE: 'I see no %s here.'
+- NOTHING_HERE: 'There''s nothing here.'
 - DO_WHAT: '%s what?'
 - OKEY_DOKEY: 'Okay, "%s".'
 - GARNERED_POINTS: 'You have garnered %d out of a possible %d points, using %d turn%S.'
