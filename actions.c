@@ -411,7 +411,7 @@ static phase_codes_t vcarry(verb_t verb, obj_t obj)
         game.prop[CAVITY] = CAVITY_EMPTY;
     }
 
-    ospeak(obj, TAKEN);
+    sspeak(TAKEN, objects[obj].inventory);
     return GO_CLEAROBJ;
 }
 
@@ -587,7 +587,7 @@ static phase_codes_t discard(verb_t verb, obj_t obj)
         return GO_CLEAROBJ;
     }
 
-    ospeak(obj, DROPPED);
+    sspeak(DROPPED, objects[obj].inventory);
     drop(obj, game.loc);
     return GO_CLEAROBJ;
 }
