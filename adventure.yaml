@@ -2712,6 +2712,8 @@ arbitrary_messages:  !!omap
 - BAD_DIRECTION: 'There is no way to go that direction.'
 - TWO_WORDS: 'Please stick to 1- and 2-word commands.'
 - OK_MAN: &ok_man 'OK'
+- TAKEN: 'taken'
+- DROPPED: 'dropped'
 - CANNOT_UNLOCK: 'You can''t unlock the keys.'
 - FUTILE_CRAWL: |-
     You have crawled around in some little holes and wound up back in the
@@ -3730,6 +3732,11 @@ objects: !!omap
     treasure: true
     descriptions:
     - 'There is a richly-carved ebony statuette here!'
+- EVERYTHING:
+    words: ['all', 'everything']
+    inventory: !!null
+    locations: LOC_NOWHERE
+    descriptions: !!null
 
 obituaries:
   - query: |-

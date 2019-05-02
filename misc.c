@@ -177,6 +177,24 @@ void rspeak(vocab_t i, ...)
     va_end(ap);
 }
 
+void ospeak(obj_t o, vocab_t i, ...)
+/* Print the i-th "random" message (section 6 of database). */
+{
+    ssize_t size = 2000; /* msglen > 50 ? msglen*2 : 100; */
+    char* rendered = xcalloc(size);
+    char* renderp = rendered;
+
+    va_list ap;
+    va_start(ap, i);
+
+    strcpy(rendered, objects[o].inventory);
+    strcat(rendered, ": ");
+    strcat(rendered, arbitrary_messages[i]);
+    speak(rendered);
+
+    va_end(ap);
+}
+
 void echo_input(FILE* destination, const char* input_prompt, const char* input)
 {
     size_t len = strlen(input_prompt) + strlen(input) + 1;

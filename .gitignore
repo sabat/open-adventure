@@ -10,6 +10,7 @@ advent.6
 MANIFEST
 *.adv
 .*~
+*.swp
 cheat
 advent.info
 coverage/*

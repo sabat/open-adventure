@@ -296,6 +296,8 @@ static phase_codes_t vcarry(verb_t verb, obj_t obj)
  *  take one without the other).  Liquids also special, since they depend on
  *  status of bottle.  Also various side effects, etc. */
 {
+    char taken_msg[80];
+
     if (obj == INTRANSITIVE) {
         /*  Carry, no object given yet.  OK if only one object present. */
         if (game.atloc[game.loc] == NO_OBJECT ||
@@ -404,7 +406,22 @@ static phase_codes_t vcarry(verb_t verb, obj_t obj)
         game.prop[obj] = STATE_FOUND;
         game.prop[CAVITY] = CAVITY_EMPTY;
     }
-    rspeak(OK_MAN);
+
+    ospeak(obj, TAKEN);
+    return GO_CLEAROBJ;
+}
+
+static phase_codes_t vcarryeverything(verb_t verb)
+/*  Get everything that's not nailed down */
+{
+    if (game.atloc[game.loc] == 0) {
+    } else {
+        for (int i = game.atloc[game.loc]; i != 0; i = game.link[i]) {
+            obj_t obj = i;
+            vcarry(verb, obj);
+        }
+    }
+
     return GO_CLEAROBJ;
 }
 
@@ -559,7 +576,7 @@ static phase_codes_t discard(verb_t verb, obj_t obj)
         return GO_CLEAROBJ;
     }
 
-    rspeak(OK_MAN);
+    ospeak(obj, DROPPED);
     drop(obj, game.loc);
     return GO_CLEAROBJ;
 }
@@ -1369,6 +1386,9 @@ phase_codes_t action(command_t command)
         } else if (command.obj == ROD && HERE(ROD2)) {
             command.obj = ROD2;
             /* FALL THROUGH */;
+        } else if ((command.verb == CARRY) && command.obj == EVERYTHING) {
+            vcarryeverything(command.verb);
+            return GO_CLEAROBJ;
         } else if ((command.verb == FIND ||
                     command.verb == INVENTORY) && (command.word[1].id == WORD_EMPTY || command.word[1].id == WORD_NOT_FOUND))
             /* FALL THROUGH */;
