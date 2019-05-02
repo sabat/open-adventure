@@ -987,6 +987,7 @@ static void listobjects(void)
                 kk = (game.loc == game.fixed[STEPS])
                      ? STEPS_UP
                      : STEPS_DOWN;
+            save_recent(obj);
             pspeak(obj, look, true, kk);
         }
     }

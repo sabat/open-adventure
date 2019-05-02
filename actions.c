@@ -296,6 +296,12 @@ static phase_codes_t vcarry(verb_t verb, obj_t obj)
  *  take one without the other).  Liquids also special, since they depend on
  *  status of bottle.  Also various side effects, etc. */
 {
+    if (obj == IT) {
+        obj_t recent = get_recent();
+        if (recent != 0)
+          obj = recent;
+    }
+
     if (obj == INTRANSITIVE || obj == IT) {
         /*  Carry, no object given yet.  OK if only one object present. */
         if (game.atloc[game.loc] == NO_OBJECT ||
@@ -481,6 +487,12 @@ static phase_codes_t discard(verb_t verb, obj_t obj)
  *  bird (might attack snake or dragon) and cage (might contain bird) and vase.
  *  Drop coins at vending machine for extra batteries. */
 {
+    if (obj == IT) {
+        obj_t recent = get_recent();
+        if (recent != 0)
+          obj = recent;
+    }
+
     if (obj == ROD && !TOTING(ROD) && TOTING(ROD2)) {
         obj = ROD2;
     }
@@ -1232,6 +1244,12 @@ static phase_codes_t throw (command_t command)
  *  (Only way to do so!)  Axe also special for dragon, bear, and
  *  troll.  Treasures special for troll. */
 {
+    if (command.obj == IT) {
+        obj_t recent = get_recent();
+        if (recent != 0)
+          command.obj = recent;
+    }
+
     if (!TOTING(command.obj)) {
         speak(actions[command.verb].message);
         return GO_CLEAROBJ;
@@ -1412,6 +1430,7 @@ phase_codes_t action(command_t command)
             discardeverything(command.verb);
             return GO_CLEAROBJ;
         } else if ((command.verb == CARRY ||
+                    command.verb == THROW ||
                     command.verb == DROP) &&
                     command.obj == IT) {
             /* FALL THROUGH */;

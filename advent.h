@@ -216,6 +216,8 @@ typedef struct {
 extern struct game_t game;
 extern struct settings_t settings;
 
+extern void save_recent(obj_t object);
+extern obj_t get_recent(void);
 extern bool get_command_input(command_t *);
 extern void clear_command(command_t *);
 extern void speak(const char*, ...);

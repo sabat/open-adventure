@@ -19,6 +19,8 @@
 #include "advent.h"
 #include "dungeon.h"
 
+obj_t recent_obj = 0;
+
 static void* xcalloc(size_t size)
 {
     void* ptr = calloc(size, 1);
@@ -597,6 +599,16 @@ void juggle(obj_t object)
     move(object + NOBJECTS, j);
 }
 
+void save_recent(obj_t object)
+{
+  recent_obj = object;
+}
+
+obj_t get_recent(void)
+{
+  return recent_obj;
+}
+
 void move(obj_t object, loc_t where)
 /*  Place any object anywhere by picking it up and dropping it.  May
  *  already be toting, in which case the carry is a no-op.  Mustn't
@@ -638,6 +650,7 @@ void carry(obj_t object, loc_t where)
         if (object != BIRD)
             ++game.holdng;
     }
+    save_recent(object);
     if (game.atloc[where] == object) {
         game.atloc[where] = game.link[object];
         return;
