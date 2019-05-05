@@ -2684,6 +2684,7 @@ arbitrary_messages:  !!omap
 - PIT_FALL: 'You fell into a pit and broke every bone in your body!'
 - ALREADY_CARRYING: &already_carrying 'You are already carrying it!'
 - YOU_JOKING: 'You can''t be serious!'
+- YOU_JOKING_OBJ: '%s: you can''t be serious!'
 - BIRD_EVADES: |-
     The bird seemed unafraid at first, but as you approach it becomes
     disturbed and you cannot catch it.

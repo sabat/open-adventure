@@ -296,13 +296,7 @@ static phase_codes_t vcarry(verb_t verb, obj_t obj)
  *  take one without the other).  Liquids also special, since they depend on
  *  status of bottle.  Also various side effects, etc. */
 {
-    if (obj == IT) {
-        obj_t recent = get_recent();
-        if (recent != 0)
-          obj = recent;
-    }
-
-    if (obj == INTRANSITIVE || obj == IT) {
+    if (obj == INTRANSITIVE) {
         /*  Carry, no object given yet.  OK if only one object present. */
         if (game.atloc[game.loc] == NO_OBJECT ||
             game.link[game.atloc[game.loc]] != 0 ||
@@ -350,7 +344,7 @@ static phase_codes_t vcarry(verb_t verb, obj_t obj)
             rspeak(HAND_PASSTHROUGH);
             break;
         default:
-            rspeak(YOU_JOKING);
+            ospeak(YOU_JOKING_OBJ, obj);
         }
         return GO_CLEAROBJ;
     }
@@ -487,12 +481,6 @@ static phase_codes_t discard(verb_t verb, obj_t obj)
  *  bird (might attack snake or dragon) and cage (might contain bird) and vase.
  *  Drop coins at vending machine for extra batteries. */
 {
-    if (obj == IT) {
-        obj_t recent = get_recent();
-        if (recent != 0)
-          obj = recent;
-    }
-
     if (obj == ROD && !TOTING(ROD) && TOTING(ROD2)) {
         obj = ROD2;
     }
@@ -927,7 +915,9 @@ static phase_codes_t inven(void)
     return GO_CLEAROBJ;
 }
 
-static phase_codes_t verbose(verb_t verb, obj_t obj)
+static phase_codes_t verbose(void)
+/*(verb_t verb) */
+/* , obj_t obj) */
 {
     game.abbnum = 1;
     rspeak(VERBOSITY);
@@ -1244,12 +1234,6 @@ static phase_codes_t throw (command_t command)
  *  (Only way to do so!)  Axe also special for dragon, bear, and
  *  troll.  Treasures special for troll. */
 {
-    if (command.obj == IT) {
-        obj_t recent = get_recent();
-        if (recent != 0)
-          command.obj = recent;
-    }
-
     if (!TOTING(command.obj)) {
         speak(actions[command.verb].message);
         return GO_CLEAROBJ;
@@ -1403,6 +1387,14 @@ phase_codes_t action(command_t command)
          *  they are never actually dropped at any location, but might
          *  be here inside the bottle or urn or as a feature of the
          *  location. */
+
+        if (command.obj == IT) {
+            obj_t recent = get_recent();
+            if (recent != 0)
+                command.obj = recent;
+        } else
+            save_recent(command.obj);
+
         if (HERE(command.obj))
             /* FALL THROUGH */;
         else if (command.obj == DWARF && atdwrf(game.loc) > 0)
@@ -1429,10 +1421,6 @@ phase_codes_t action(command_t command)
         } else if ((command.verb == DROP) && command.obj == EVERYTHING) {
             discardeverything(command.verb);
             return GO_CLEAROBJ;
-        } else if ((command.verb == CARRY ||
-                    command.verb == THROW ||
-                    command.verb == DROP) &&
-                    command.obj == IT) {
             /* FALL THROUGH */;
         } else if ((command.verb == FIND ||
                     command.verb == INVENTORY) && (command.word[1].id == WORD_EMPTY || command.word[1].id == WORD_NOT_FOUND))
@@ -1448,8 +1436,9 @@ phase_codes_t action(command_t command)
 
     switch (command.part) {
     case intransitive:
-        if (command.word[1].raw[0] != '\0' && command.verb != SAY && command.obj != IT)
+        if (command.word[1].raw[0] != '\0' && command.verb != SAY)
             return GO_WORD2;
+
         if (command.verb == SAY)
             /* KEYS is not special, anything not NO_OBJECT or INTRANSITIVE
              * will do here. We're preventing interpretation as an intransitive
@@ -1464,7 +1453,9 @@ phase_codes_t action(command_t command)
             case  DROP:
                 return GO_UNKNOWN;
             case  VERBOSE:
-                return verbose(command.verb, INTRANSITIVE);
+                return verbose();
+/*(command.verb);
+ , INTRANSITIVE); */
             case  SAY:
                 return GO_UNKNOWN;
             case  UNLOCK:

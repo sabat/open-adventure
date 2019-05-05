@@ -141,6 +141,24 @@ void sspeak(const int msg, ...)
     va_end(ap);
 }
 
+void ospeak(const int msg, obj_t obj, ...)
+/* Print an arbitrary message with sspeak, but first,
+   make sure the object we're talking about isn't a
+   special object prefixed with a *. If it is, we
+   don't want to see the *, so shift it off. */
+{
+    size_t len = strlen(objects[obj].inventory);
+    char obj_name[len];
+
+    if (strncmp(&objects[obj].inventory[0], "*", 0) == 0) {
+        strncpy(obj_name, &objects[obj].inventory[1], len-1);
+        obj_name[len-1] = 0;
+    } else
+        strncpy(obj_name, objects[obj].inventory, len);
+
+    sspeak(msg, obj_name);
+}
+
 void pspeak(vocab_t msg, enum speaktype mode, bool blank, int skip, ...)
 /* Find the skip+1st message from msg and print it.  Modes are:
  * feel = for inventory, what you can touch
@@ -583,8 +601,8 @@ void juggle(obj_t object)
 
 void save_recent(obj_t object)
 {
-  if (strlen(objects[object].descriptions[0]) != 0)
-    recent_obj = object;
+    if (objects[object].inventory != 0 && strncmp(objects[object].inventory, "*", 1) != 0)
+        recent_obj = object;
 }
 
 obj_t get_recent(void)

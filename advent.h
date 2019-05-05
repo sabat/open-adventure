@@ -222,6 +222,7 @@ extern bool get_command_input(command_t *);
 extern void clear_command(command_t *);
 extern void speak(const char*, ...);
 extern void sspeak(int msg, ...);
+extern void ospeak(int msg, obj_t obj, ...);
 extern void pspeak(vocab_t, enum speaktype, bool, int, ...);
 extern void rspeak(vocab_t, ...);
 extern void echo_input(FILE*, const char*, const char*);
