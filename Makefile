@@ -9,6 +9,7 @@ VERS=$(shell sed -n <NEWS '/^[0-9]/s/:.*//p' | head -1)
 
 CC?=gcc
 CCFLAGS+=-std=c99 -D_DEFAULT_SOURCE -DVERSION=\"$(VERS)\" -O2 -D_FORTIFY_SOURCE=2 -fstack-protector-all
+CCFLAGS+=-DADVENT_NO_SAVE_PENALTY
 
 UNAME_S := $(shell uname -s)
 

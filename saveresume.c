@@ -36,6 +36,27 @@ struct save_t save;
 
 #define IGNORE(r) do{if (r){}}while(0)
 
+int ends_with_sav(char *string)
+{
+  string = strrchr(string, '.');
+
+  if(string != NULL)
+    return(strcmp(string, ".sav"));
+
+  return(-1);
+}
+
+char *fix_filename(char *name)
+{
+    if (ends_with_sav(name) == -1) {
+        /* no file extension */
+        name = (char *) realloc(name, strlen(name) + 5);
+        strcat(name, ".sav");
+    }
+
+    return(name);
+}
+
 int savefile(FILE *fp, int32_t version)
 /* Save game to file. No input or output from user. */
 {
@@ -61,15 +82,20 @@ int suspend(void)
 #endif
     FILE *fp = NULL;
 
+#ifndef ADVENT_NO_SAVE_PENALTY
     rspeak(SUSPEND_WARNING);
     if (!yes(arbitrary_messages[THIS_ACCEPTABLE], arbitrary_messages[OK_MAN], arbitrary_messages[OK_MAN]))
         return GO_CLEAROBJ;
     game.saved = game.saved + 5;
+#endif
 
     while (fp == NULL) {
         char* name = readline("\nFile name: ");
         if (name == NULL)
             return GO_TOP;
+
+        name = fix_filename(name);
+
         fp = fopen(name, WRITE_MODE);
         if (fp == NULL)
             printf("Can't open file %s, try again.\n", name);
@@ -103,6 +129,7 @@ int resume(void)
         char* name = readline("\nFile name: ");
         if (name == NULL)
             return GO_TOP;
+        name = fix_filename(name);
         fp = fopen(name, READ_MODE);
         if (fp == NULL)
             printf("Can't open file %s, try again.\n", name);
