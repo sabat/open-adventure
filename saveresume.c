@@ -36,27 +36,6 @@ struct save_t save;
 
 #define IGNORE(r) do{if (r){}}while(0)
 
-int ends_with_sav(char *string)
-{
-  string = strrchr(string, '.');
-
-  if(string != NULL)
-    return(strcmp(string, ".sav"));
-
-  return(-1);
-}
-
-char *fix_filename(char *name)
-{
-    if (ends_with_sav(name) == -1) {
-        /* no file extension */
-        name = (char *) realloc(name, strlen(name) + 5);
-        strcat(name, ".sav");
-    }
-
-    return(name);
-}
-
 int savefile(FILE *fp, int32_t version)
 /* Save game to file. No input or output from user. */
 {
@@ -108,7 +87,7 @@ int suspend(void)
     /* Why exit here? Let the player be. */
     /* exit(EXIT_SUCCESS); */
 
-    return(0);
+    return(GO_CLEAROBJ);
 }
 
 int resume(void)

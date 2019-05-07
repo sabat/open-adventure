@@ -769,4 +769,25 @@ void state_change(obj_t obj, int state)
     pspeak(obj, change, true, state);
 }
 
+int ends_with_sav(char *string)
+{
+  string = strrchr(string, '.');
+
+  if(string != NULL)
+    return(strcmp(string, ".sav"));
+
+  return(-1);
+}
+
+char *fix_filename(char *name)
+{
+    if (ends_with_sav(name) == -1) {
+        /* no file extension */
+        name = (char *) realloc(name, strlen(name) + 5);
+        strcat(name, ".sav");
+    }
+
+    return(name);
+}
+
 /* end */

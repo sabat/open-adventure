@@ -248,6 +248,8 @@ extern long initialise(void);
 extern phase_codes_t action(command_t);
 extern void state_change(obj_t, int);
 extern bool is_valid(struct game_t);
+extern int ends_with_sav(char *string);
+extern char *fix_filename(char *name);
 
 void bug(enum bugtype, const char *) __attribute__((__noreturn__));
 

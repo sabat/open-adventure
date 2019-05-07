@@ -45,6 +45,7 @@ static bool do_move(void);
 int main(int argc, char *argv[])
 {
     int ch;
+    char *filename = (char *)malloc(255);
 
     /*  Options. */
 
@@ -72,7 +73,10 @@ int main(int argc, char *argv[])
             break;
 #ifndef ADVENT_NOSAVE
         case 'r':
-            rfp = fopen(optarg, "r");
+            memset(filename, '\0', 255);
+            strcpy(filename, optarg);
+            filename = fix_filename(filename);
+            rfp = fopen(filename, "r");
             if (rfp == NULL)
                 fprintf(stderr,
                         "advent: can't open save file %s for read\n",
