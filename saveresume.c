@@ -105,7 +105,10 @@ int suspend(void)
     savefile(fp, VRSION);
     fclose(fp);
     rspeak(RESUME_HELP);
-    exit(EXIT_SUCCESS);
+    /* Why exit here? Let the player be. */
+    /* exit(EXIT_SUCCESS); */
+
+    return(0);
 }
 
 int resume(void)

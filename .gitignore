@@ -3,6 +3,7 @@ advent
 *.gcno
 *.o
 *.html
+*.sav
 dungeon.h
 dungeon.c
 advent.6
