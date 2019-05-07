@@ -1,0 +1,88 @@
+FOOD (ROOM 1):
+  n: FOOD
+  s: CAGE
+  e: COINS XXX
+  w: GOLD
+  u: OUT OF MAZE
+  d: X
+COINS:
+  n: X
+  s: JEWELS XXX
+  e: CAGE
+  w: FOOD
+  u: X
+  d: X
+JEWELS:
+  n: DEAD END
+  s: SILVER XXX
+  e: COINS
+  w: X
+  u: X
+  d: DEAD END
+SILVER:
+  n: X
+  s: AX XXX
+  e: JEWELS
+  w: DIAMONDS
+  u: X
+  d: KEYS
+AX:
+  n: ?1 XXX
+  s: AX
+  e: KEYS
+  w: SILVER
+  u: BOTTLE
+  d: DEAD END
+?1:
+  n: ?1
+  s: X
+  e: ORANGE XXX
+  w: AX
+  u: X
+  d: DEAD END
+ORANGE:
+  e: ?2 XXX
+?2:
+  nw: DEAD END (treasure here)
+  n: ORANGE
+CAGE (room2):
+  n: COINS
+  s: DEAD END
+  e: DEAD END
+  w: FOOD
+  u: ROD
+  d: ROD
+ROD (room3):
+  n: X
+  s: X
+  e: X
+  w: X
+  u: CAGE
+  d: CAGE
+GOLD:
+  n: FOOD
+  s: GOLD
+  e: DEAD END
+  w: GOLD
+  u: X
+  d: X
+KEYS:
+  n: X
+  s: BOTTLE
+  e: AX
+  w: DIAMONDS
+  u: SILVER
+  d: X
+BOTTLE:
+  n: AX
+  s: DEAD END
+  e: X
+  w: KEYS
+  u: X
+  d: X
+DIAMONDS:
+  n: X
+  s: X
+  e: SILVER
+  u: X
+  d: X
