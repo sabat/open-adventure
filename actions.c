@@ -929,13 +929,17 @@ static phase_codes_t batteries(obj_t obj)
 {
     if (obj == BATTERY) {
         game.limit += BATTERYLIFE;
-        char limit_s[6];
-        sprintf(limit_s, "%li", game.limit);
-        sspeak(LAMP_CHARGED, limit_s);
+        sspeak(LAMP_CHARGED, game.limit);
     } else {
         rspeak(HUH_MAN);
     }
     return GO_CLEAROBJ;
+}
+
+static phase_codes_t limit(void)
+{
+  sspeak(CURRENT_LIMIT, game.limit);
+  return GO_CLEAROBJ;
 }
 #endif
 
@@ -1557,6 +1561,10 @@ phase_codes_t action(command_t command)
             case WASTE:
                 rspeak(NUMERIC_REQUIRED);
                 return GO_TOP;
+#ifdef TURN_CHEAT
+            case  LIMIT:
+                return limit();
+#endif
             default: // LCOV_EXCL_LINE
                 BUG(INTRANSITIVE_ACTION_VERB_EXCEEDS_GOTO_LIST); // LCOV_EXCL_LINE
             }

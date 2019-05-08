@@ -2739,6 +2739,7 @@ arbitrary_messages:  !!omap
 - WHICH_WAY: 'Which way?'
 - FORGOT_PATH: 'Sorry, but I no longer seem to remember how it was you got here.'
 - CARRY_LIMIT: 'You can''t carry anything more.  You''ll have to drop something first.'
+- CURRENT_LIMIT: 'The current turn count is %d'
 - GRATE_NOWAY: 'You can''t go through a locked steel grate!'
 - YOU_HAVEIT: 'I believe what you want is right here with you.'
 - DONT_FIT: 'You don''t fit through a two-inch slit!'
@@ -2863,7 +2864,7 @@ arbitrary_messages:  !!omap
     you can find some fresh batteries.  I seem to recall there's a vending
     machine in the maze.  Bring some coins with you.
 - LAMP_OUT: 'Your lamp has run out of power.'
-- LAMP_CHARGED: 'Your lamp now has fresh batteries. Game limit is now %s.'
+- LAMP_CHARGED: 'Your lamp now has fresh batteries. Game limit is now %d.'
 - PLEASE_ANSWER: 'Please answer the question.'
 - PIRATE_SPOTTED: |-
     There are faint rustling noises from the darkness behind you.  As you
@@ -3785,6 +3786,9 @@ actions: !!omap
 - VERBOSE:
     message: NO_MESSAGE
     words: ['verb', 'verbose']
+- LIMIT:
+    message: NO_MESSAGE
+    words: ['limit']
 - REPLACE:
     message: NO_MESSAGE
     words: ['replace', 'batteries']
