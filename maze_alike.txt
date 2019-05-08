@@ -43,8 +43,10 @@ AX:
 ORANGE:
   e: ?2 XXX
 ?2:
-  nw: DEAD END (treasure here)
+  nw: DEAD END (treasure here) XXX
   n: ORANGE
+TREASURE ROOM:
+  se: ?2
 CAGE (room2):
   n: COINS
   s: DEAD END

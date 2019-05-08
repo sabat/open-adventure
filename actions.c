@@ -924,6 +924,21 @@ static phase_codes_t verbose(void)
     return GO_TOP;
 }
 
+#ifdef TURN_CHEAT
+static phase_codes_t batteries(obj_t obj)
+{
+    if (obj == BATTERY) {
+        game.limit += BATTERYLIFE;
+        char limit_s[6];
+        sprintf(limit_s, "%li", game.limit);
+        sspeak(LAMP_CHARGED, limit_s);
+    } else {
+        rspeak(HUH_MAN);
+    }
+    return GO_CLEAROBJ;
+}
+#endif
+
 static phase_codes_t light(verb_t verb, obj_t obj)
 /*  Light.  Applicable only to lamp and urn. */
 {
@@ -1043,7 +1058,11 @@ static phase_codes_t lock(verb_t verb, obj_t obj)
     case CLAM:
         if (verb == LOCK)
             rspeak(HUH_MAN);
+#ifdef CLAM_AXE
+        else if (!(TOTING(TRIDENT) || TOTING(AXE)))
+#else
         else if (!TOTING(TRIDENT))
+#endif
             rspeak(CLAM_OPENER);
         else {
             DESTROY(CLAM);
@@ -1395,7 +1414,11 @@ phase_codes_t action(command_t command)
         } else
             save_recent(command.obj);
 
+#ifdef TURN_CHEAT
+        if (HERE(command.obj) || command.obj == BATTERY)
+#else
         if (HERE(command.obj))
+#endif
             /* FALL THROUGH */;
         else if (command.obj == DWARF && atdwrf(game.loc) > 0)
             /* FALL THROUGH */;
@@ -1454,8 +1477,6 @@ phase_codes_t action(command_t command)
                 return GO_UNKNOWN;
             case  VERBOSE:
                 return verbose();
-/*(command.verb);
- , INTRANSITIVE); */
             case  SAY:
                 return GO_UNKNOWN;
             case  UNLOCK:
@@ -1635,6 +1656,10 @@ phase_codes_t action(command_t command)
             speak(actions[command.verb].message);
             return GO_CLEAROBJ;
         }
+#ifdef TURN_CHEAT
+        case  REPLACE:
+            return batteries(command.obj);
+#endif
         // LCOV_EXCL_START
         // This case should never happen - here only as placeholder
         case PART:

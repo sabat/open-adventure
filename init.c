@@ -39,7 +39,11 @@ struct game_t game = {
     .clock2  = FLASHTIME,
     .newloc  = LOC_START,
     .loc     = LOC_START,
+#ifdef FORCE_NOVICE
+    .limit   = NOVICELIMIT,
+#else
     .limit   = GAMELIMIT,
+#endif
     .foobar  = WORD_EMPTY,
 };
 

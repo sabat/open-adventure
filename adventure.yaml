@@ -2863,6 +2863,7 @@ arbitrary_messages:  !!omap
     you can find some fresh batteries.  I seem to recall there's a vending
     machine in the maze.  Bring some coins with you.
 - LAMP_OUT: 'Your lamp has run out of power.'
+- LAMP_CHARGED: 'Your lamp now has fresh batteries. Game limit is now %s.'
 - PLEASE_ANSWER: 'Please answer the question.'
 - PIRATE_SPOTTED: |-
     There are faint rustling noises from the darkness behind you.  As you
@@ -3784,6 +3785,9 @@ actions: !!omap
 - VERBOSE:
     message: NO_MESSAGE
     words: ['verb', 'verbose']
+- REPLACE:
+    message: NO_MESSAGE
+    words: ['replace', 'batteries']
 - UNLOCK:
     message: *not_lockable
     words: ['unloc', 'open']
@@ -3886,7 +3890,7 @@ actions: !!omap
     words: ['suspe', 'pause', 'save']
 - RESUME:
     message: *huh_man
-    words: ['resum', 'resta']
+    words: ['resum', 'resta', 'restore']
 - FLY:
     message: *am_game
     words: ['fly']
